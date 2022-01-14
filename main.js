@@ -66,7 +66,11 @@ const putGamesOnPage = (gamesArr) => {
     gameCard.append(timeDiv);
     const vsDiv = document.createElement("div");
     vsDiv.classList.add("vs-div");
-    vsDiv.innerHTML = `<div class='vs-team-div'><img src='images/logos/${game.teams[0].toLowerCase()}.png'></div><div class='vs-logo-div'><img src='images/logos/vs.png'></div><div class='vs-team-div'><img src='images/logos/${game.teams[1].toLowerCase()}.png'></div>`;
+    vsDiv.innerHTML = `<a class='vs-team-div' href='team-page.html?${
+      game.teams[0]
+    }'><img src='images/logos/${game.teams[0].toLowerCase()}.png'></a><div class='vs-logo-div'><img src='images/logos/vs.png'></div><a class='vs-team-div' href='team-page.html?${
+      game.teams[1]
+    }'><img src='images/logos/${game.teams[1].toLowerCase()}.png'></a>`;
     gameCard.append(vsDiv);
     newDayDiv.append(gameCard);
   });
