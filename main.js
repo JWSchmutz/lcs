@@ -23,15 +23,6 @@ document.querySelectorAll(".filters .team-holder img").forEach((img) => {
     }
 
     if (selectedTeams.length) {
-      console.log(selectedTeams);
-      console.log(LockIn22);
-      console.log(
-        LockIn22.filter(
-          (game) =>
-            selectedTeams.includes(game.teams[0]) ||
-            selectedTeams.includes(game.teams[1])
-        )
-      );
       putGamesOnPage(
         LockIn22.filter(
           (game) =>
@@ -49,10 +40,14 @@ const putGamesOnPage = (gamesArr) => {
   scheduleContainer.innerHTML = "";
   let day;
   let newDayDiv;
+  let dayArr;
   gamesArr.map((game) => {
+    console.log(game);
     if (game.day !== day) {
       newDayDiv = document.createElement("div");
-      day = game.day;
+      dayArr = convertUTCDateToLocalDate(game.dateDate).toString().split(" ");
+      console.log(dayArr);
+      day = `${dayArr[0]} ${dayArr[1]}. ${dayArr[2]}`;
       const newDayH2 = document.createElement("h2");
       newDayH2.textContent = day;
       newDayDiv.append(newDayH2);
@@ -62,7 +57,24 @@ const putGamesOnPage = (gamesArr) => {
     gameCard.classList.add("game-card");
     const timeDiv = document.createElement("div");
     timeDiv.classList.add("time-div");
-    timeDiv.innerText = game.time;
+    let time = convertUTCDateToLocalDate(game.dateDate)
+      .toString()
+      .split(" ")[4];
+    time =
+      time.charAt(3) === "0"
+        ? time.substring(0, 2)
+        : (time = `${time.substring(0, 2)}:${time.substring(3, 5)}`);
+    if (parseInt(time.split(":")[0]) > 12) {
+      let timeArr = time.split(":");
+      timeArr[0] = parseInt(time.split(" ")[0]) - 12;
+      console.log(timeArr);
+      time = timeArr.join(":");
+      time += " PM";
+    } else {
+      time = time + (time.substring(0, 2) === "12" ? " PM" : " AM");
+    }
+
+    timeDiv.innerText = time;
     gameCard.append(timeDiv);
     const vsDiv = document.createElement("div");
     vsDiv.classList.add("vs-div");
@@ -77,3 +89,9 @@ const putGamesOnPage = (gamesArr) => {
 };
 
 putGamesOnPage(LockIn22);
+
+function convertUTCDateToLocalDate(date) {
+  var dateLocal = new Date(date);
+  var newDate = dateLocal.toString();
+  return newDate;
+}
