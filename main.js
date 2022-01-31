@@ -42,11 +42,12 @@ const putGamesOnPage = (gamesArr) => {
   let newDayDiv;
   let dayArr;
   gamesArr.map((game) => {
-    console.log(game);
     if (game.day !== day) {
       newDayDiv = document.createElement("div");
       dayArr = convertUTCDateToLocalDate(game.dateDate).toString().split(" ");
-      console.log(dayArr);
+      if (dayArr[2][0] === "0") {
+        dayArr[2] = dayArr[2][1];
+      }
       day = `${dayArr[0]} ${dayArr[1]}. ${dayArr[2]}`;
       const newDayH2 = document.createElement("h2");
       newDayH2.textContent = day;
@@ -67,7 +68,6 @@ const putGamesOnPage = (gamesArr) => {
     if (parseInt(time.split(":")[0]) > 12) {
       let timeArr = time.split(":");
       timeArr[0] = parseInt(time.split(" ")[0]) - 12;
-      console.log(timeArr);
       time = timeArr.join(":");
       time += " PM";
     } else {
@@ -88,7 +88,8 @@ const putGamesOnPage = (gamesArr) => {
   });
 };
 
-putGamesOnPage(LockIn22);
+// putGamesOnPage(LockIn22);
+putGamesOnPage(Spring22);
 
 function convertUTCDateToLocalDate(date) {
   var dateLocal = new Date(date);

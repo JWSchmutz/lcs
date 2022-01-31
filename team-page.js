@@ -20,7 +20,9 @@ const putGamesOnPage = (gamesArr) => {
     if (game.day !== day) {
       newDayDiv = document.createElement("div");
       dayArr = convertUTCDateToLocalDate(game.dateDate).toString().split(" ");
-      console.log(dayArr);
+      if (dayArr[2][0] === "0") {
+        dayArr[2] = dayArr[2][1];
+      }
       day = `${dayArr[0]} ${dayArr[1]}. ${dayArr[2]}`;
       const newDayH2 = document.createElement("h2");
       newDayH2.textContent = day;
@@ -62,7 +64,7 @@ const putGamesOnPage = (gamesArr) => {
   });
 };
 
-putGamesOnPage(LockIn22.filter((game) => game.teams.includes(upperCaseTeam)));
+putGamesOnPage(Spring22.filter((game) => game.teams.includes(upperCaseTeam)));
 function convertUTCDateToLocalDate(date) {
   var dateLocal = new Date(date);
   var newDate = dateLocal.toString();
