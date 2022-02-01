@@ -7,7 +7,7 @@ document
     document
       .querySelectorAll(".active")
       .forEach((img) => img.classList.remove("active"));
-    putGamesOnPage(LockIn22);
+    putGamesOnPage(Spring22);
   });
 
 document.querySelectorAll(".filters .team-holder img").forEach((img) => {
@@ -24,13 +24,13 @@ document.querySelectorAll(".filters .team-holder img").forEach((img) => {
 
     if (selectedTeams.length) {
       putGamesOnPage(
-        LockIn22.filter(
+        Spring22.filter(
           (game) =>
             selectedTeams.includes(game.teams[0]) ||
             selectedTeams.includes(game.teams[1])
         )
       );
-    } else putGamesOnPage(LockIn22);
+    } else putGamesOnPage(Spring22);
   });
 });
 
@@ -88,7 +88,7 @@ const putGamesOnPage = (gamesArr) => {
   });
 };
 
-// putGamesOnPage(LockIn22);
+// putGamesOnPage(Spring22);
 putGamesOnPage(Spring22);
 
 function convertUTCDateToLocalDate(date) {
