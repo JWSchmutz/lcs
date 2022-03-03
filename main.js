@@ -51,6 +51,8 @@ const putGamesOnPage = (gamesArr) => {
       day = `${dayArr[0]} ${dayArr[1]}. ${dayArr[2]}`;
       const newDayH2 = document.createElement("h2");
       newDayH2.textContent = day;
+      newDayH2.setAttribute("data-time", game.dateDate);
+      newDayH2.setAttribute("class", "game-date");
       newDayDiv.append(newDayH2);
       scheduleContainer.append(newDayDiv);
     }
@@ -86,6 +88,31 @@ const putGamesOnPage = (gamesArr) => {
     gameCard.append(vsDiv);
     newDayDiv.append(gameCard);
   });
+  let dayToScrollTo;
+  let useNext = false;
+  document.querySelectorAll(".game-date").forEach((gameDate) => {
+    if (
+      new Date(gameDate.getAttribute("data-time")).getTime() <
+      new Date().getTime()
+    ) {
+      dayToScrollTo = gameDate;
+      if (
+        new Date(gameDate.getAttribute("data-time")).getTime() + 50000000 <
+        new Date().getTime()
+      ) {
+        useNext = true;
+      }
+    }
+    if (
+      useNext &&
+      new Date(gameDate.getAttribute("data-time")).getTime() >
+        new Date().getTime()
+    ) {
+      useNext = false;
+      dayToScrollTo = gameDate;
+    }
+  });
+  dayToScrollTo.scrollIntoView(true);
 };
 
 // putGamesOnPage(Spring22);

@@ -16,7 +16,6 @@ const putGamesOnPage = (gamesArr) => {
   let newDayDiv;
   let dayArr;
   gamesArr.map((game) => {
-    console.log(game);
     if (game.day !== day) {
       newDayDiv = document.createElement("div");
       dayArr = convertUTCDateToLocalDate(game.dateDate).toString().split(" ");
@@ -26,6 +25,8 @@ const putGamesOnPage = (gamesArr) => {
       day = `${dayArr[0]} ${dayArr[1]}. ${dayArr[2]}`;
       const newDayH2 = document.createElement("h2");
       newDayH2.textContent = day;
+      newDayH2.setAttribute("data-time", game.dateDate);
+      newDayH2.setAttribute("class", "game-date");
       newDayDiv.append(newDayH2);
       scheduleContainer.append(newDayDiv);
     }
@@ -43,7 +44,6 @@ const putGamesOnPage = (gamesArr) => {
     if (parseInt(time.split(":")[0]) > 12) {
       let timeArr = time.split(":");
       timeArr[0] = parseInt(time.split(" ")[0]) - 12;
-      console.log(timeArr);
       time = timeArr.join(":");
       time += " PM";
     } else {
@@ -62,6 +62,31 @@ const putGamesOnPage = (gamesArr) => {
     gameCard.append(vsDiv);
     newDayDiv.append(gameCard);
   });
+  let dayToScrollTo;
+  let useNext = false;
+  document.querySelectorAll(".game-date").forEach((gameDate) => {
+    if (
+      new Date(gameDate.getAttribute("data-time")).getTime() <
+      new Date().getTime()
+    ) {
+      dayToScrollTo = gameDate;
+      if (
+        new Date(gameDate.getAttribute("data-time")).getTime() + 50000000 <
+        new Date().getTime()
+      ) {
+        useNext = true;
+      }
+    }
+    if (
+      useNext &&
+      new Date(gameDate.getAttribute("data-time")).getTime() >
+        new Date().getTime()
+    ) {
+      useNext = false;
+      dayToScrollTo = gameDate;
+    }
+  });
+  dayToScrollTo.scrollIntoView(true);
 };
 
 putGamesOnPage(Spring22.filter((game) => game.teams.includes(upperCaseTeam)));
