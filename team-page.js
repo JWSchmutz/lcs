@@ -89,7 +89,7 @@ const putGamesOnPage = (gamesArr) => {
   dayToScrollTo.scrollIntoView(true);
 };
 
-putGamesOnPage(Spring22.filter((game) => game.teams.includes(upperCaseTeam)));
+putGamesOnPage(Spring23.filter((game) => game.teams.includes(upperCaseTeam)));
 function convertUTCDateToLocalDate(date) {
   var dateLocal = new Date(date);
   var newDate = dateLocal.toString();
