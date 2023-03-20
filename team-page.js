@@ -86,7 +86,7 @@ const putGamesOnPage = (gamesArr) => {
       dayToScrollTo = gameDate;
     }
   });
-  dayToScrollTo.scrollIntoView(true);
+  // dayToScrollTo.scrollIntoView(true);
 };
 
 putGamesOnPage(Spring23.filter((game) => game.teams.includes(upperCaseTeam)));

@@ -112,7 +112,7 @@ const putGamesOnPage = (gamesArr) => {
       dayToScrollTo = gameDate;
     }
   });
-  dayToScrollTo.scrollIntoView(true);
+  // dayToScrollTo.scrollIntoView(true);
 };
 
 // putGamesOnPage(Spring23);
